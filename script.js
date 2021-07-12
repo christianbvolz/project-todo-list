@@ -30,7 +30,7 @@ function completedItem(event) {
 function addTask() {
   const input = document.getElementById('texto-tarefa');
   if (input.value.length === 0) {
-    alert('insira uma terefa.');
+    alert('insira uma tarefa.');
   } else {
     const list = document.getElementById('lista-tarefas');
     const listItem = document.createElement('li');
@@ -81,20 +81,6 @@ function saveClassesList() {
   localStorage.setItem('classes', JSON.stringify(classesList));
 }
 
-window.onload = function savedList() {
-  if (localStorage.getItem('input') !== null) {
-    const list = document.getElementById('lista-tarefas');
-    const input = JSON.parse(localStorage.getItem('input'));
-    const classes = JSON.parse(localStorage.getItem('classes'));
-    const listLength = input.length;
-    for (let index = 0; index < listLength; index += 1) {
-      const listItem = document.createElement('li');
-      listItem.innerText = input[index];
-      listItem.className = classes[index];
-      list.appendChild(listItem);
-    }
-  }
-};
 function saveList() {
   saveImputList();
   saveClassesList();
@@ -126,6 +112,14 @@ function moveDown() {
   }
 }
 
+function removeSelected() {
+  const selected = document.querySelector('.selected-item');
+  if (selected !== null) {
+    selected.remove();
+  }
+}
+
+document.getElementById('remover-selecionado').addEventListener('click', removeSelected);
 document.getElementById('mover-cima').addEventListener('click', moveUp);
 document.getElementById('mover-baixo').addEventListener('click', moveDown);
 document.getElementById('salvar-tarefas').addEventListener('click', saveList);
@@ -137,3 +131,20 @@ document.getElementById('texto-tarefa').addEventListener('keypress', (event) => 
     addTask();
   }
 });
+
+window.onload = function savedList() {
+  if (localStorage.getItem('input') !== null) {
+    const list = document.getElementById('lista-tarefas');
+    const input = JSON.parse(localStorage.getItem('input'));
+    const classes = JSON.parse(localStorage.getItem('classes'));
+    const listLength = input.length;
+    for (let index = 0; index < listLength; index += 1) {
+      const listItem = document.createElement('li');
+      listItem.innerText = input[index];
+      listItem.className = classes[index];
+      list.appendChild(listItem);
+      listItem.addEventListener('click', selectedItem);
+      listItem.addEventListener('dblclick', completedItem);
+    }
+  }
+};
