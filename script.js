@@ -48,6 +48,17 @@ function cleanList() {
   }
 }
 
+function removeCompleted() {
+  const list = document.getElementById('lista-tarefas').children;
+  for (let index = 0; index < list.length; index += 1) {
+    if (list[index].className.includes('completed') === true) {
+      list[index].remove();
+      index -= 1;
+    }
+  }
+}
+
+document.getElementById('remover-finalizados').addEventListener('click', removeCompleted);
 document.getElementById('apaga-tudo').addEventListener('click', cleanList);
 document.getElementById('criar-tarefa').addEventListener('click', addTask);
 document.getElementById('texto-tarefa').addEventListener('keypress', (event) => {
