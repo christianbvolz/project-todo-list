@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable no-restricted-syntax */
 
 function cleanSelectItem() {
   const selected = document.querySelector('.selected-item');
@@ -98,6 +100,34 @@ function saveList() {
   saveClassesList();
 }
 
+function moveUp() {
+  const selected = document.querySelector('.selected-item');
+  if (selected !== null && selected.previousElementSibling !== null) {
+    const previous = selected.previousElementSibling;
+    const selectedInput = selected.innerHTML;
+    const selectedClass = selected.className;
+    selected.innerHTML = previous.innerHTML;
+    selected.className = previous.className;
+    previous.innerHTML = selectedInput;
+    previous.className = selectedClass;
+  }
+}
+
+function moveDown() {
+  const selected = document.querySelector('.selected-item');
+  if (selected !== null && selected.nextElementSibling !== null) {
+    const next = selected.nextElementSibling;
+    const selectedInput = selected.innerHTML;
+    const selectedClass = selected.className;
+    selected.innerHTML = next.innerHTML;
+    selected.className = next.className;
+    next.innerHTML = selectedInput;
+    next.className = selectedClass;
+  }
+}
+
+document.getElementById('mover-cima').addEventListener('click', moveUp);
+document.getElementById('mover-baixo').addEventListener('click', moveDown);
 document.getElementById('salvar-tarefas').addEventListener('click', saveList);
 document.getElementById('remover-finalizados').addEventListener('click', removeCompleted);
 document.getElementById('apaga-tudo').addEventListener('click', cleanList);
