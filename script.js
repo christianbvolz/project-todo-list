@@ -1,3 +1,4 @@
+
 function cleanSelectItem() {
   const selected = document.querySelector('.selected-item');
   if (selected !== null) {
@@ -58,6 +59,46 @@ function removeCompleted() {
   }
 }
 
+function saveImputList() {
+  const list = document.getElementsByClassName('list-item');
+  const inputList = [];
+  for (const item of list) {
+    const input = item.innerHTML;
+    inputList.push(input);
+  }
+  localStorage.setItem('input', JSON.stringify(inputList));
+}
+
+function saveClassesList() {
+  const list = document.getElementsByClassName('list-item');
+  const classesList = [];
+  for (const item of list) {
+    const classes = item.className;
+    classesList.push(classes);
+  }
+  localStorage.setItem('classes', JSON.stringify(classesList));
+}
+
+window.onload = function savedList() {
+  if (localStorage.getItem('input') !== null) {
+    const list = document.getElementById('lista-tarefas');
+    const input = JSON.parse(localStorage.getItem('input'));
+    const classes = JSON.parse(localStorage.getItem('classes'));
+    const listLength = input.length;
+    for (let index = 0; index < listLength; index += 1) {
+      const listItem = document.createElement('li');
+      listItem.innerText = input[index];
+      listItem.className = classes[index];
+      list.appendChild(listItem);
+    }
+  }
+};
+function saveList() {
+  saveImputList();
+  saveClassesList();
+}
+
+document.getElementById('salvar-tarefas').addEventListener('click', saveList);
 document.getElementById('remover-finalizados').addEventListener('click', removeCompleted);
 document.getElementById('apaga-tudo').addEventListener('click', cleanList);
 document.getElementById('criar-tarefa').addEventListener('click', addTask);
