@@ -13,15 +13,6 @@ function selectedItem(event) {
   listItem.className += ' selected-item';
 }
 
-// function cleancompletedItem() {
-//   const selected = document.querySelector('.completed-item');
-//   if (selected !== null) {
-//     let newClass = selected.className.split(' ').filter((array) => array !== 'completed-item');
-//     newClass = newClass.join(' ');
-//     selected.className = newClass;
-//   }
-// }
-
 function completedItem(event) {
   const listItem = event.target;
   if (listItem.className.includes('completed') === true) {
@@ -49,6 +40,15 @@ function addTask() {
   }
 }
 
+function cleanList() {
+  const list = document.getElementById('lista-tarefas');
+  const count = list.children.length;
+  for (let index = 0; index < count; index += 1) {
+    list.removeChild(list.children[0]);
+  }
+}
+
+document.getElementById('apaga-tudo').addEventListener('click', cleanList);
 document.getElementById('criar-tarefa').addEventListener('click', addTask);
 document.getElementById('texto-tarefa').addEventListener('keypress', (event) => {
   if (event.keyCode === 13) {
